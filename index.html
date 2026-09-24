@@ -36,10 +36,40 @@
   <span style="font-size:12px;opacity:.9">Elije tu cancion  <b>cancion.mp3</b>Detalles Mr<b>💙🌹♥️</b> (Reproductor Mr”)</span>
   <input type="file" id="pickFile" accept="audio/*">
   <button id="pickBtn">Elegir canción</button>
-  <audio id="audio" preload="auto" controls>
+<!-- MÚSICA -->
+<audio id="audio" preload="auto" loop>
   <source src="./Ojitos_De_Miel.mp3" type="audio/mpeg">
   Tu navegador no puede reproducir este audio.
 </audio>
+
+<script>
+  const audio = document.getElementById("audio");
+
+  // Volumen inicial
+  audio.volume = 1.0;
+
+  // Intentar reproducir automáticamente
+  async function iniciarMusica() {
+    try {
+      await audio.play();
+      console.log("🎵 Música reproduciéndose");
+      document.removeEventListener("click", iniciarMusica);
+      document.removeEventListener("touchstart", iniciarMusica);
+      document.removeEventListener("keydown", iniciarMusica);
+    } catch (error) {
+      console.log("Autoplay bloqueado. Esperando interacción del usuario...");
+    }
+  }
+
+  // Intentar inmediatamente
+  iniciarMusica();
+
+  // Si el navegador bloquea autoplay,
+  // comenzar con el primer clic/toque/tecla.
+  document.addEventListener("click", iniciarMusica, { once: true });
+  document.addEventListener("touchstart", iniciarMusica, { once: true });
+  document.addEventListener("keydown", iniciarMusica, { once: true });
+</script>
 </div>
 
 <canvas id="fx" style="position:fixed;inset:0;pointer-events:none;"></canvas>
